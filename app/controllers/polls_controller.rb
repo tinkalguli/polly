@@ -1,4 +1,6 @@
 class PollsController < ApplicationController
+  before_action :load_poll, only: [:show]
+
   def index
     polls = Poll.all
     render status: :ok, json: { polls: polls }
@@ -14,9 +16,19 @@ class PollsController < ApplicationController
     end
   end
 
+  def show
+    render status: :ok, json: { poll: @poll }
+  end
+
   private
 
   def poll_params
     params.require(:poll).permit(:title)
+  end
+
+  def load_poll
+    @poll = Poll.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => errors
+      render json: {errors: errors}
   end
 end
