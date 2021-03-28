@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { initializeLogger, logger } from "common/logger";
 
 const App = () => {
   useEffect(() => {
@@ -11,7 +12,7 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" render={() => <div>Home</div>} />
+        <Route exact path="/" render={() => <center>Home</center>} />
         <Route exact path="/about" render={() => <div>About</div>} />
       </Switch>
     </Router>
