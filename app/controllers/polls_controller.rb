@@ -7,7 +7,7 @@ class PollsController < ApplicationController
   def create
     @poll = Poll.new(poll_params)
     if @poll.save
-      render status: :ok, json: { notice: 'Poll was successfully created' }
+      render status: :ok, json: { notice: t('successfully_created', entity: 'Poll') }
     else
       errors = @poll.errors.full_messages
       render status: :unprocessable_entity, json: { errors: errors  }
@@ -17,7 +17,6 @@ class PollsController < ApplicationController
   private
 
   def poll_params
-    puts params
     params.require(:poll).permit(:title)
   end
 end

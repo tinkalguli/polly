@@ -3,15 +3,19 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { initializeLogger, logger } from "common/logger";
 import Dashboard from "components/Dashboard";
 import CreatePoll from "components/Polls/CreatePoll";
+import { ToastContainer } from "react-toastify";
+import { registerIntercepts, setAuthHeaders } from "apis/axios";
 
 const App = () => {
   useEffect(() => {
     initializeLogger();
-    logger.info("Log from js-logger");
+    registerIntercepts();
+    setAuthHeaders(setLoading);
   }, []);
 
   return (
     <Router>
+      <ToastContainer />
       <Switch>
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/polls/create" component={CreatePoll} />
