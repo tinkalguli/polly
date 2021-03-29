@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { isNil, isEmpty, either } from "ramda";
+import { Link } from "react-router-dom";
 
 import Container from "components/Container";
 import ListPolls from "components/Polls/ListPolls";
@@ -51,24 +52,24 @@ const Dashboard = ({ history }) => {
     );
   }
 
-  if (!either(isNil, isEmpty)(polls)) {
-    return (
-      <Container>
+  return (
+    <Container>
+      <div>
+        <h1>Polls</h1>
+        <Link to="/polls/create">Create</Link>
+      </div>
+      {
+        either(isNil, isEmpty)(polls) ?
+        <h1 className="text-xl leading-5 text-center">
+          No Polls Available 😔
+        </h1> :
         <ListPolls
           data={polls}
           showPoll={showPoll}
           updatePoll={updatePoll}
           destroyPoll={destroyPoll}
         />
-      </Container>
-    );
-  }
-
-  return (
-    <Container>
-      <h1 className="text-xl leading-5 text-center">
-        No Polls Available 😔
-      </h1>
+      }
     </Container>
   );
 };
