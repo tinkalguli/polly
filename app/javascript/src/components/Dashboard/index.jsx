@@ -12,7 +12,6 @@ const Dashboard = ({ history }) => {
   const [loading, setLoading] = useState(true);
 
   const fetchPolls = async () => {
-    // setLoading(true);
     try {
       const response = await pollsApi.list();
       setPolls(response.data.polls);
@@ -20,6 +19,15 @@ const Dashboard = ({ history }) => {
     } catch (error) {
       logger.error(error);
       setLoading(false);
+    }
+  };
+
+  const destroyPoll = async id => {
+    try {
+      await pollsApi.destroy(id);
+      await fetchPolls();
+    } catch (error) {
+      logger.error(error);
     }
   };
 
@@ -50,6 +58,7 @@ const Dashboard = ({ history }) => {
           data={polls}
           showPoll={showPoll}
           updatePoll={updatePoll}
+          destroyPoll={destroyPoll}
         />
       </Container>
     );
