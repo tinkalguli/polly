@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
-import SignupForm from "components/Authentication/Form/SignupForm";
+import SignUpForm from "components/Authentication/Form/SignUpForm";
 import authApi from "apis/auth";
+import { logger } from "common/logger";
 
-const Signup = ({ history }) => {
-  const [name, setName] = useState("");
+const SignUp = ({ history }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -16,7 +18,8 @@ const Signup = ({ history }) => {
       setLoading(true);
       await authApi.signup({
         user: {
-          name,
+          first_name: firstName,
+          last_name: lastName,
           email,
           password,
           password_confirmation: passwordConfirmation,
@@ -30,8 +33,9 @@ const Signup = ({ history }) => {
     }
   };
   return (
-    <SignupForm
-      setName={setName}
+    <SignUpForm
+      setFirstName={setFirstName}
+      setLastName={setLastName}
       setEmail={setEmail}
       setPassword={setPassword}
       setPasswordConfirmation={setPasswordConfirmation}
@@ -41,4 +45,4 @@ const Signup = ({ history }) => {
   );
 };
 
-export default Signup;
+export default SignUp;
