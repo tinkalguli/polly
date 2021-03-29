@@ -7,7 +7,7 @@ import PageLoader from "components/PageLoader";
 import pollsApi from "apis/polls";
 import { logger } from "common/logger";
 
-const Dashboard = () => {
+const Dashboard = ({ history }) => {
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(true);
 

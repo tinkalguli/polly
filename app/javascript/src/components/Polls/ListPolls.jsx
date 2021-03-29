@@ -5,8 +5,9 @@ const ListPolls = ({ data, showPoll, updatePoll }) => {
     <h1>List of Polls</h1>
     {
       data.map(poll => (
-        <li key={poll.id} onClick={showPoll}>{poll.title} 
-          <span className="px-6" onClick={updatePoll}>Edit</span>
+        <li key={poll.id}>
+          <span onClick={() => showPoll(poll.id)}>{poll.title}</span> 
+          <span className="px-6" onClick={() => updatePoll(poll.id)}>Edit</span>
         </li>
       ))
     }

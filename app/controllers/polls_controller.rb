@@ -1,5 +1,5 @@
 class PollsController < ApplicationController
-  before_action :load_poll, only: [:show]
+  before_action :load_poll, only: %i[show update]
 
   def index
     polls = Poll.all
@@ -18,6 +18,15 @@ class PollsController < ApplicationController
 
   def show
     render status: :ok, json: { poll: @poll }
+  end
+
+  def update
+    if @poll.update(poll_params)
+      render status: :ok, json: { notice: 'Successfully updated poll.' }
+    else
+      errors = @poll.errors.full_messages
+      render status: :unprocessable_entity, json: { errors: errors }
+    end
   end
 
   private

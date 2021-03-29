@@ -6,6 +6,7 @@ import CreatePoll from "components/Polls/CreatePoll";
 import { ToastContainer } from "react-toastify";
 import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import ShowPoll from "components/Polls/ShowPoll";
+import EditPoll from "components/Polls/EditPoll";
 
 const App = () => {
   useEffect(() => {
@@ -21,6 +22,7 @@ const App = () => {
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/polls/create" component={CreatePoll} />
         <Route exact path="/polls/:id/show" component={ShowPoll} />
+        <Route exact path="/polls/:id/edit" component={EditPoll} />
         <Route exact path="/about" render={() => <div>About</div>} />
       </Switch>
     </Router>
