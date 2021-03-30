@@ -1,5 +1,5 @@
 class PollsController < ApplicationController
-  before_action :authenticate_user_using_x_auth_token, except: [:new, :edit, :index]
+  before_action :authenticate_user_using_x_auth_token, except: :index
   before_action :load_poll, only: %i[show update destroy]
 
   def index
@@ -9,7 +9,6 @@ class PollsController < ApplicationController
 
   def create
     @poll = Poll.new(poll_params.merge(user_id: @current_user.id))
-    authorize @poll
     if @poll.save
       render status: :ok, json: { notice: t('successfully_created', entity: 'Poll') }
     else
@@ -23,6 +22,7 @@ class PollsController < ApplicationController
   end
 
   def update
+    authorize @poll
     if @poll.update(poll_params)
       render status: :ok, json: { notice: 'Successfully updated poll.' }
     else
@@ -32,6 +32,7 @@ class PollsController < ApplicationController
   end
 
   def destroy
+    authorize @poll
     if @poll.destroy
       render status: :ok, json: { notice: 'Successfully deleted poll.' }
     else
