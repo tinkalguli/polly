@@ -18,11 +18,13 @@ const PollForm = ({
         value={title}
         onChange={e => setTitle(e.target.value)}
       />
-      <Button
-        type="submit"
-        buttonText={type === "create" ? "Create poll" : "Update poll"}
-        loading={loading}
-      />
+      <div className="mt-6">
+        <Button
+          type="submit"
+          buttonText={type === "create" ? "Create poll" : "Update poll"}
+          loading={loading}
+        />
+      </div>
     </form>
   );
 };

@@ -22,22 +22,21 @@ const SignUpForm = ({
           className="mt-6 text-3xl font-extrabold leading-9
         text-center text-bb-gray-700"
         >
-          {/* text-center text-gray-900"> */}
           Sign Up
         </h2>
         <div className="text-center">
           <Link
             to="/login"
-            className="mt-2 text-sm font-medium text-center
+            className="mt-2 text-sm font-medium text-center hover:underline
             text-bb-purple transition duration-150 ease-in-out
-            focus:outline-none focus:underline"
+            focus:outline-none focus:underline hover:text-purple-600"
           >
             Or Login Now
           </Link>
         </div>
         <form className="mt-8" onSubmit={handleSubmit}>
           <Input
-            label="Fist Name"
+            label="First Name"
             placeholder="Oliver"
             onChange={e => setFirstName(e.target.value)}
           />
@@ -64,7 +63,9 @@ const SignUpForm = ({
             placeholder="********"
             onChange={e => setPasswordConfirmation(e.target.value)}
           />
-          <Button type="submit" buttonText="Register" loading={loading} />
+          <div className="mt-6">
+            <Button type="submit" buttonText="Register" loading={loading} />
+          </div>
         </form>
       </div>
     </div>

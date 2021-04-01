@@ -6,7 +6,7 @@ import { resetAuthTokens } from "apis/axios";
 import { logger } from "common/logger";
 import NavItem from "./NavItem";
 
-const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
+const NavBar = ({ isLoggedIn }) => {
   const userName = getFromLocalStorage("authUserFirstName");
   const userId = getFromLocalStorage("authUserId");
 
@@ -21,7 +21,6 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
       });
       resetAuthTokens();
       window.location.href = "/";
-      setIsLoggedIn(true)
     } catch (error) {
       logger.error(error);
     }
@@ -48,15 +47,24 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
                 <a
                   onClick={handleLogout}
                   className="inline-flex items-center px-1 pt-1 text-sm
-                font-semibold leading-5 text-bb-gray-600 text-opacity-50
-                transition duration-150 ease-in-out border-b-2
-                border-transparent hover:text-bb-gray-600 focus:outline-none
+                  font-semibold leading-5 text-bb-gray-600 text-opacity-50
+                  transition duration-150 ease-in-out border-b-2
+                  border-transparent hover:text-bb-gray-600 focus:outline-none
                   focus:text-bb-gray-700 cursor-pointer"
                 >
                   LogOut
                 </a>
               </> :
-              <NavItem name="Login" path="/login" />
+              <Link
+                to="/login"
+                className="inline-flex items-center px-1 pt-1 text-sm
+                font-semibold leading-5 text-bb-gray-600 text-opacity-50
+                transition duration-150 ease-in-out border-b-2
+                border-transparent hover:text-bb-gray-600 focus:outline-none
+                focus:text-bb-gray-700 cursor-pointer"
+              >
+                Login
+              </Link>
             }
           </div>
         </div>

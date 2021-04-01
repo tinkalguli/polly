@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'bb-purple': '#5469D4',
+        'bb-purple': '#a855f7',
         'bb-env': '#F1F5F9',
         'bb-border': '#E4E4E7',
         'bb-gray-700': '#37415',
@@ -20,6 +20,9 @@ module.exports = {
       boxShadow: {
         "custom-box-shadow": "10px 10px 5px 200px rgba(0,0,0,1)",
       }
+    },
+    minHeight: {
+      'screen': '90vh',
     },
   },
   variants: {},

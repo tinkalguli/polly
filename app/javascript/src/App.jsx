@@ -12,13 +12,14 @@ import ShowPoll from "components/Polls/ShowPoll";
 import EditPoll from "components/Polls/EditPoll";
 import SignUp from "components/Authentication/SignUp";
 import Login from "components/Authentication/Login";
-import NavBar from "./components/NavBar";
+import RedirectRoute from "components/Common/RedirectRoute";
+import NavBar from "components/NavBar";
+import NoMatch from "components/Common/NoMatch";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const authToken = getFromLocalStorage("authToken");
-  const loggedInStatus = !either(isNil, isEmpty)(authToken) && authToken !== "null";
-  const [isLoggedIn, setIsLoggedIn] = useState(loggedInStatus);
+  const isLoggedIn = !either(isNil, isEmpty)(authToken) && authToken !== "null";
 
   useEffect(() => {
     initializeLogger();
@@ -37,17 +38,38 @@ const App = () => {
   return (
     <Router>
       <ToastContainer />
-      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <NavBar isLoggedIn={isLoggedIn} />
       <Switch>
-        <Route exact path="/" component={Dashboard} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/polls/create" component={CreatePoll} />
-        <Route exact path="/polls/:id/show" component={ShowPoll} />
-        <Route exact path="/polls/:id/edit" component={EditPoll} />
+        <Route exact path="/" component={Dashboard} isLoggedIn={isLoggedIn}/>
+        {
+          isLoggedIn ?
+          <AuthenticatedRoutes /> :
+          <UnAuthenticatedRoutes />
+        }
       </Switch>
     </Router>
   );
 };
+
+const AuthenticatedRoutes = () => {
+  return (
+    <>
+      <Route exact path="/polls/create" component={CreatePoll} />
+      <Route exact path="/polls/:id/show" component={ShowPoll} />
+      <Route exact path="/polls/:id/edit" component={EditPoll} />
+      <Route path="*" component={NoMatch} />
+    </>
+  );
+}
+
+const UnAuthenticatedRoutes = () => {
+  return (
+    <>
+      <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/login" component={Login} />
+      <RedirectRoute path="*" redirectRoute="/login" />
+    </>
+  );
+}
 
 export default App;

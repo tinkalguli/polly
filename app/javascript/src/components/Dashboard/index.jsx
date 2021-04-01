@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { isNil, isEmpty, either } from "ramda";
-import { Link } from "react-router-dom";
+import Button from "components/Button";
 
 import Container from "components/Container";
 import ListPolls from "components/Polls/ListPolls";
@@ -8,7 +8,7 @@ import PageLoader from "components/PageLoader";
 import pollsApi from "apis/polls";
 import { logger } from "common/logger";
 
-const Dashboard = ({ history }) => {
+const Dashboard = ({ isLoggedIn }) => {
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,14 +32,6 @@ const Dashboard = ({ history }) => {
     }
   };
 
-  const showPoll = id => {
-    history.push(`/polls/${id}/show`);
-  };
-
-  const updatePoll = id => {
-    history.push(`/polls/${id}/edit`);
-  };
-
   useEffect(() => {
     fetchPolls();
   }, []);
@@ -54,9 +46,19 @@ const Dashboard = ({ history }) => {
 
   return (
     <Container>
-      <div>
-        <h1>Polls</h1>
-        <Link to="/polls/create">Create</Link>
+      <div className="flex justify-between items-center mt-8 py-4 border-b" >
+        <h1 className="text-bb-purple text-4xl">Polls</h1>
+        {
+          isLoggedIn
+          ? <Button
+              size="small"
+              type="link"
+              path={`/polls/new`}
+              buttonText="Create"
+              iconClass="ri-add-line"
+            />
+          : ""
+        }
       </div>
       {
         either(isNil, isEmpty)(polls) ?
@@ -65,8 +67,6 @@ const Dashboard = ({ history }) => {
         </h1> :
         <ListPolls
           data={polls}
-          showPoll={showPoll}
-          updatePoll={updatePoll}
           destroyPoll={destroyPoll}
         />
       }

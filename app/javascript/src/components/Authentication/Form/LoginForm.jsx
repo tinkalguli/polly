@@ -22,7 +22,7 @@ const LoginForm = ({ handleSubmit, setEmail, setPassword, loading }) => {
             to="/signup"
             className="mt-2 text-sm font-medium text-bb-purple
             transition duration-150 ease-in-out focus:outline-none
-            focus:underline"
+            focus:underline hover:text-purple-600 hover:underline"
           >
             Or Register Now
           </Link>
@@ -40,7 +40,9 @@ const LoginForm = ({ handleSubmit, setEmail, setPassword, loading }) => {
             placeholder="********"
             onChange={e => setPassword(e.target.value)}
           />
-          <Button type="submit" buttonText="Sign In" loading={loading} />
+          <div className="mt-6">
+            <Button type="submit" buttonText="Sign In" loading={loading} />
+          </div>
         </form>
       </div>
     </div>
