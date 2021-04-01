@@ -3,7 +3,7 @@ class PollsController < ApplicationController
   before_action :load_poll, only: %i[show update destroy]
 
   def index
-    polls = Poll.all
+    polls = Poll.all.order('created_at DESC')
     render status: :ok, json: { polls: polls }
   end
 

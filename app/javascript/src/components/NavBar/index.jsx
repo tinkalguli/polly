@@ -27,10 +27,10 @@ const NavBar = ({ isLoggedIn }) => {
   };
 
   return (
-    <nav className="bg-white shadow">
+    <nav className="bg-white border-b">
       <div className="px-2 mx-auto max-w-7xl sm:px-4 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          <h1 className="font-mono text-3xl font-bold">
+          <h1 className="font-sans text-3xl font-semibold">
             <Link className="cursor-pointer" to="/" >Polly</Link>
           </h1>
           <div className="flex items-center justify-end gap-x-4">
@@ -38,7 +38,7 @@ const NavBar = ({ isLoggedIn }) => {
               isLoggedIn ?
               <>
                 <span
-                  className="inline-flex items-center px-2 pt-1 text-sm font-regular leading-5 text-bb-gray-600
+                  className="inline-flex items-center px-2 pt-1 text-md font-regular leading-5 text-bb-gray-600
                   text-opacity-50 transition duration-150 ease-in-out border-b-2 border-transparent focus:outline-none
                   focus:text-bb-gray-700"
                 >
@@ -46,7 +46,7 @@ const NavBar = ({ isLoggedIn }) => {
                 </span>
                 <a
                   onClick={handleLogout}
-                  className="inline-flex items-center px-1 pt-1 text-sm
+                  className="inline-flex items-center px-1 pt-1 text-md
                   font-semibold leading-5 text-bb-gray-600 text-opacity-50
                   transition duration-150 ease-in-out border-b-2
                   border-transparent hover:text-bb-gray-600 focus:outline-none
@@ -57,7 +57,7 @@ const NavBar = ({ isLoggedIn }) => {
               </> :
               <Link
                 to="/login"
-                className="inline-flex items-center px-1 pt-1 text-sm
+                className="inline-flex items-center px-1 pt-1 text-md
                 font-semibold leading-5 text-bb-gray-600 text-opacity-50
                 transition duration-150 ease-in-out border-b-2
                 border-transparent hover:text-bb-gray-600 focus:outline-none

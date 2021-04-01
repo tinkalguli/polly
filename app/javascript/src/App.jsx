@@ -39,36 +39,39 @@ const App = () => {
     <Router>
       <ToastContainer />
       <NavBar isLoggedIn={isLoggedIn} />
-      <Switch>
-        <Route exact path="/" component={Dashboard} isLoggedIn={isLoggedIn}/>
-        {
-          isLoggedIn ?
-          <AuthenticatedRoutes /> :
-          <UnAuthenticatedRoutes />
-        }
-      </Switch>
+      {
+        isLoggedIn ?
+        <AuthenticatedRoutes isLoggedIn={isLoggedIn} /> :
+        <UnAuthenticatedRoutes isLoggedIn={isLoggedIn} />
+      }
     </Router>
   );
 };
 
-const AuthenticatedRoutes = () => {
+const AuthenticatedRoutes = ({ isLoggedIn }) => {
   return (
-    <>
-      <Route exact path="/polls/create" component={CreatePoll} />
+    <Switch>
+      <Route exact path="/">
+        <Dashboard isLoggedIn={isLoggedIn}/>
+      </Route>
+      <Route exact path="/polls/new" component={CreatePoll} />
       <Route exact path="/polls/:id/show" component={ShowPoll} />
       <Route exact path="/polls/:id/edit" component={EditPoll} />
-      <Route path="*" component={NoMatch} />
-    </>
+      <Route exact path="*" component={NoMatch} />
+    </Switch>
   );
 }
 
-const UnAuthenticatedRoutes = () => {
+const UnAuthenticatedRoutes = ({ isLoggedIn }) => {
   return (
-    <>
+    <Switch>
+      <Route exact path="/">
+        <Dashboard isLoggedIn={isLoggedIn}/>
+      </Route>
       <Route exact path="/signup" component={SignUp} />
       <Route exact path="/login" component={Login} />
       <RedirectRoute path="*" redirectRoute="/login" />
-    </>
+    </Switch>
   );
 }
 
