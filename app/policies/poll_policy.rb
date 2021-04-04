@@ -22,7 +22,7 @@ class PollPolicy
 
   # Similar in the case for update? policy.
   def update?
-    poll.user_id == user.id
+    edit?
   end
 
   # Every user can create a poll, hence create? will always returns true.
@@ -32,7 +32,7 @@ class PollPolicy
 
   # Only the user that has created the poll, can delete it.
   def destroy?
-    poll.user_id == user.id
+    edit?
   end
 
   # class Scope

@@ -4,7 +4,6 @@ import { getFromLocalStorage, setToLocalStorage } from "helpers/storage";
 import authApi from "apis/auth";
 import { resetAuthTokens } from "apis/axios";
 import { logger } from "common/logger";
-import NavItem from "./NavItem";
 
 const NavBar = ({ isLoggedIn }) => {
   const userName = getFromLocalStorage("authUserFirstName");

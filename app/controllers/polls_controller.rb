@@ -9,11 +9,26 @@ class PollsController < ApplicationController
 
   def create
     @poll = Poll.new(poll_params.merge(user_id: @current_user.id))
+    
     if @poll.save
-      render status: :ok, json: { notice: t('successfully_created', entity: 'Poll') }
+      begin
+        Option.transaction do
+          @options = Option.create!(options_params.map { |x| x.merge(poll_id: @poll.id) })
+        end
+      rescue ActiveRecord::RecordInvalid => exception
+        @optionsError = exception
+      end
+
+      if !@optionsError
+        render status: :ok, json: { notice: t('successfully_created', entity: 'Poll') }
+      else
+        Poll.destroy(@poll.id)
+        render status: :unprocessable_entity, json: { errors: @optionsError }
+      end
+
     else
       errors = @poll.errors.full_messages
-      render status: :unprocessable_entity, json: { errors: errors  }
+      render status: :unprocessable_entity, json: { errors: errors }
     end
   end
 
@@ -45,6 +60,10 @@ class PollsController < ApplicationController
 
   def poll_params
     params.require(:poll).permit(:title)
+  end
+
+  def options_params
+    params.permit(options: [:content]).require(:options)
   end
 
   def load_poll
