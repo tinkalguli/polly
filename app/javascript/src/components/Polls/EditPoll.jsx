@@ -8,16 +8,22 @@ import PageLoader from "components/PageLoader";
 import { logger } from "common/logger";
 
 const EditPoll = ({ history }) => {
+  const { id } = useParams();
   const [title, setTitle] = useState("");
-  // const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const { id } = useParams();
+  const [options, setOptions] = useState([
+    { content: "" },
+    { content: "" },
+    { content: "" },
+    { content: "" },
+  ]);
 
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      await pollsApi.update({ id, payload: { poll: { title } } });
+      console.log("sdv")
+      await pollsApi.update(id, { poll: { title , options_attributes: options }});
       setLoading(false);
       history.push("/");
     } catch (error) {
@@ -30,7 +36,7 @@ const EditPoll = ({ history }) => {
     try {
       const response = await pollsApi.show(id);
       setTitle(response.data.poll.title);
-      // setUserId(response.data.poll.user_id);
+      setOptions(response.data.options);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -52,7 +58,15 @@ const EditPoll = ({ history }) => {
 
   return (
     <Container>
-      <PollForm type="update" title={title} setTitle={setTitle} loading={loading} handleSubmit={handleSubmit} />
+      <PollForm
+        type="update"
+        title={title}
+        options={options}
+        setTitle={setTitle}
+        setOptions={setOptions}
+        loading={loading}
+        handleSubmit={handleSubmit}
+      />
     </Container>
   );
 };

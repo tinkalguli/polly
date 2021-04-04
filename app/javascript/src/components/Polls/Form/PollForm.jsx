@@ -6,18 +6,19 @@ import Button from "components/Button";
 const PollForm = ({
   type = "create",
   title,
-  option1,
-  option2,
-  option3,
-  option4,
+  options,
   setTitle,
-  setOption1,
-  setOption2,
-  setOption3,
-  setOption4,
+  setOptions,
   loading,
   handleSubmit,
 }) => {
+  const handleSetOptions = (event, index) => {
+    const data = [...options];
+    data[index].content = event.target.value;
+
+    setOptions(data);
+  }
+
   return (
     <form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
       <Input
@@ -30,26 +31,26 @@ const PollForm = ({
         <Input
           label="First option"
           placeholder="First option"
-          value={option1}
-          onChange={e => setOption1(e.target.value)}
+          value={options[0].content}
+          onChange={e => handleSetOptions(e, 0)}
         />
         <Input
           label="Second option"
           placeholder="Second option"
-          value={option2}
-          onChange={e => setOption2(e.target.value)}
+          value={options[1].content}
+          onChange={e => handleSetOptions(e, 1)}
         />
         <Input
           label="Third option"
           placeholder="Third option"
-          value={option3}
-          onChange={e => setOption3(e.target.value)}
+          value={options[2].content}
+          onChange={e => handleSetOptions(e, 2)}
         />
         <Input
           label="Fourth option"
           placeholder="Fourth option"
-          value={option4}
-          onChange={e => setOption4(e.target.value)}
+          value={options[3].content}
+          onChange={e => handleSetOptions(e, 3)}
         />
       </div>
       <div className="mt-6">
