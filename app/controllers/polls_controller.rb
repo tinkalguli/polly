@@ -7,24 +7,49 @@ class PollsController < ApplicationController
     render status: :ok, json: { polls: polls }
   end
 
+  # def create
+  #   @poll = Poll.new(poll_params.merge(user_id: @current_user.id))
+    
+  #   if @poll.save
+  #     begin
+  #       Option.transaction do
+  #         @options = Option.create!(options_params.map { |x| x.merge(poll_id: @poll.id) })
+  #       end
+  #     rescue ActiveRecord::RecordInvalid => exception
+  #       @optionsError = exception
+  #     end
+
+  #     if !@optionsError
+  #       render status: :ok, json: { notice: t('successfully_created', entity: 'Poll') }
+  #     else
+  #       Poll.destroy(@poll.id)
+  #       render status: :unprocessable_entity, json: { errors: @optionsError }
+  #     end
+
+  #   else
+  #     errors = @poll.errors.full_messages
+  #     render status: :unprocessable_entity, json: { errors: errors }
+  #   end
+  # end
+
   def create
     @poll = Poll.new(poll_params.merge(user_id: @current_user.id))
     
     if @poll.save
-      begin
-        Option.transaction do
-          @options = Option.create!(options_params.map { |x| x.merge(poll_id: @poll.id) })
-        end
-      rescue ActiveRecord::RecordInvalid => exception
-        @optionsError = exception
-      end
+      # begin
+      #   Option.transaction do
+      #     @options = Option.create!(options_params.map { |x| x.merge(poll_id: @poll.id) })
+      #   end
+      # rescue ActiveRecord::RecordInvalid => exception
+      #   @optionsError = exception
+      # end
 
-      if !@optionsError
+      # if !@optionsError
         render status: :ok, json: { notice: t('successfully_created', entity: 'Poll') }
-      else
-        Poll.destroy(@poll.id)
-        render status: :unprocessable_entity, json: { errors: @optionsError }
-      end
+      # else
+      #   Poll.destroy(@poll.id)
+      #   render status: :unprocessable_entity, json: { errors: @optionsError }
+      # end
 
     else
       errors = @poll.errors.full_messages
@@ -59,7 +84,7 @@ class PollsController < ApplicationController
   private
 
   def poll_params
-    params.require(:poll).permit(:title)
+    params.require(:poll).permit(:title, :options_attributes => [:content])
   end
 
   def options_params

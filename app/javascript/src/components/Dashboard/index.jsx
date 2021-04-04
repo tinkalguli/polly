@@ -62,7 +62,7 @@ const Dashboard = ({ isLoggedIn }) => {
       </div>
       {
         either(isNil, isEmpty)(polls) ?
-        <h1 className="text-xl leading-5 text-center">
+        <h1 className="text-3xl leading-5 text-center pt-6">
           No Polls Available 😔
         </h1> :
         <ListPolls
