@@ -15,7 +15,9 @@ class ResponsesController < ApplicationController
   private
 
   def response_params
-    params.require(:response).permit(:poll_id, :option_id)
+    params.require(:response)
+      .permit(:poll_id, :option_id)
+      .merge(user_id: @current_user.id)
   end
 
   def check_response_existance
@@ -23,7 +25,7 @@ class ResponsesController < ApplicationController
       poll_id: response_params[:poll_id],
       user_id: @current_user.id
     )
-    if response.length
+    if response.length > 0
       render status: :unprocessable_entity, json: {
         errors: "You have already voted"
       }

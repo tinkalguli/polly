@@ -6,4 +6,4 @@ export const SESSIONS_URL = API_PREFIX_URL + "sessions/";
 
 export const USERS_URL = API_PREFIX_URL + "users/";
 
-export const RESPONDS_URL = API_PREFIX_URL + "responds/";
+export const RESPONSES_URL = API_PREFIX_URL + "responses/";

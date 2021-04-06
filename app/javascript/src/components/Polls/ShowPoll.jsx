@@ -5,19 +5,33 @@ import Button from "components/Button";
 import Container from "components/Container";
 import PageLoader from "components/PageLoader";
 import pollsApi from "apis/polls";
+import responsesApi from "apis/responses";
 import { logger } from "common/logger";
+import { getFromLocalStorage } from "helpers/storage";
 
 const ShowPoll = () => {
   const { id } = useParams();
+  const userId = getFromLocalStorage("authUserId");
   const [title, setTitle] = useState("");
   const [options, setOptions] = useState([]);
+  const [votedOption, setVotedOption] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [isVoted, setIsVoted] = useState(false);
+  const [votes, setVotes] = useState([]);
 
   const fetchPollDetails = async () => {
     try {
       const response = await pollsApi.show(id);
+      const userResponses = response.data.responses.find(
+        (v) => v.user_id == userId
+      );
+
       setTitle(response.data.poll.title);
       setOptions(response.data.options);
+      setVotes(response.data.responses);
+      setVotedOption(userResponses ? userResponses.option_id : userResponses);
+      setIsVoted(Boolean(userResponses));
     } catch (error) {
       logger.error(error);
     } finally {
@@ -28,13 +42,26 @@ const ShowPoll = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await pollsApi.create({ poll: { title, options_attributes: options } });
+      await responsesApi.create({
+        response: { poll_id: id, option_id: votedOption },
+      });
       setLoading(false);
-      history.push("/");
+      fetchPollDetails();
     } catch (error) {
       logger.error(error);
       setLoading(false);
     }
+  };
+
+  const getVotePercentage = (optionId) => {
+    const filteredVotes = votes.filter((v) => v.option_id == optionId);
+
+    if (!filteredVotes.length) {
+      return "0";
+    }
+
+    const percentage = (votes.length / filteredVotes.length) * 100;
+    return percentage % 1 ? percentage.toFixed(2) : percentage;
   };
 
   useEffect(() => {
@@ -53,19 +80,39 @@ const ShowPoll = () => {
         </h1>
         <ul className="mb-6 mt-3 px-6">
           {options?.map((option) => (
-            <li className="my-6 block w-full" key={option?.id}>
+            <li key={option?.id} className="my-6 block w-full">
               <span
-                className="border rounded p-3 w-3/4 inline-block cursor-pointer
-                hover:bg-bb-purple hover:text-white"
+                className={`border rounded p-3 w-3/4 inline-block cursor-pointer
+                hover:bg-bb-purple hover:text-white ${
+                  option.id === votedOption
+                    ? "bg-purple-600 text-white shadow-md"
+                    : ""
+                } ${isVoted ? "pointer-events-none" : ""}`}
+                onClick={() => setVotedOption(option.id)}
               >
                 {option?.content}
               </span>
-              <span className="w-1/4"></span>
+              {isVoted ? (
+                <span className="w-1/4 pl-4">
+                  {getVotePercentage(option.id)}%
+                </span>
+              ) : (
+                ""
+              )}
             </li>
           ))}
         </ul>
         <div className="flex justify-center px-6">
-          <Button size="small" buttonText="Submit" />
+          {isVoted ? (
+            <p className="py-2 font-medium">Thanks for voting! 🎉</p>
+          ) : (
+            <Button
+              loading={loading}
+              onClick={handleSubmit}
+              size="small"
+              buttonText="Submit"
+            />
+          )}
         </div>
       </div>
     </Container>
