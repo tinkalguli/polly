@@ -54,13 +54,11 @@ const ShowPoll = () => {
   };
 
   const getVotePercentage = (optionId) => {
-    const filteredVotes = votes.filter((v) => v.option_id == optionId);
-
-    if (!filteredVotes.length) {
+    if (!votes.length) {
       return "0";
     }
-
-    const percentage = (votes.length / filteredVotes.length) * 100;
+    const filteredVotes = votes.filter((v) => v.option_id == optionId);
+    const percentage = (filteredVotes.length / votes.length) * 100;
     return percentage % 1 ? percentage.toFixed(2) : percentage;
   };
 

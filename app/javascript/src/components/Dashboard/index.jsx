@@ -23,7 +23,7 @@ const Dashboard = ({ isLoggedIn }) => {
     }
   };
 
-  const destroyPoll = async id => {
+  const destroyPoll = async (id) => {
     try {
       await pollsApi.destroy(id);
       await fetchPolls();
@@ -46,30 +46,27 @@ const Dashboard = ({ isLoggedIn }) => {
 
   return (
     <Container>
-      <div className="flex justify-between items-center mt-8 py-4 border-b" >
+      <div className="flex justify-between items-center mt-8 py-4 border-b">
         <h1 className="text-bb-purple text-4xl font-medium">Polls</h1>
-        {
-          isLoggedIn
-          ? <Button
-              size="small"
-              type="link"
-              path={`/polls/new`}
-              buttonText="Create"
-              iconClass="ri-add-line"
-            />
-          : ""
-        }
+        {isLoggedIn ? (
+          <Button
+            size="small"
+            type="link"
+            path={`/polls/new`}
+            buttonText="Create"
+            iconClass="ri-add-line"
+          />
+        ) : (
+          ""
+        )}
       </div>
-      {
-        either(isNil, isEmpty)(polls) ?
+      {either(isNil, isEmpty)(polls) ? (
         <h1 className="text-3xl leading-5 text-center pt-6">
           No Polls Available 😔
-        </h1> :
-        <ListPolls
-          data={polls}
-          destroyPoll={destroyPoll}
-        />
-      }
+        </h1>
+      ) : (
+        <ListPolls data={polls} destroyPoll={destroyPoll} />
+      )}
     </Container>
   );
 };

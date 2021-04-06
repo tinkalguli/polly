@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import SignUpForm from "components/Authentication/Form/SignUpForm";
 import authApi from "apis/auth";
 import { logger } from "common/logger";
+import { setAuthHeaders } from "apis/axios";
+import { setToLocalStorage } from "helpers/storage";
 
-const SignUp = ({ history }) => {
+const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,7 +18,7 @@ const SignUp = ({ history }) => {
     event.preventDefault();
     try {
       setLoading(true);
-      await authApi.signup({
+      const response = await authApi.signup({
         user: {
           first_name: firstName,
           last_name: lastName,
@@ -25,8 +27,15 @@ const SignUp = ({ history }) => {
           password_confirmation: passwordConfirmation,
         },
       });
+      setToLocalStorage({
+        authToken: response.data.auth_token,
+        email,
+        userId: response.data.user_id,
+        userFirstName: response.data.user_first_name,
+      });
+      setAuthHeaders();
       setLoading(false);
-      history.push("/login");
+      window.location.href = "/";
     } catch (error) {
       setLoading(false);
       logger.error(error);
