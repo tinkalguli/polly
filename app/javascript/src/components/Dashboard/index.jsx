@@ -47,7 +47,7 @@ const Dashboard = ({ isLoggedIn }) => {
   return (
     <Container>
       <div className="flex justify-between items-center mt-8 py-4 border-b" >
-        <h1 className="text-bb-purple text-4xl">Polls</h1>
+        <h1 className="text-bb-purple text-4xl font-medium">Polls</h1>
         {
           isLoggedIn
           ? <Button
