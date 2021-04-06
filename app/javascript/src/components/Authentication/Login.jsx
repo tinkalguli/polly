@@ -6,12 +6,12 @@ import { setAuthHeaders } from "apis/axios";
 import { setToLocalStorage } from "helpers/storage";
 import { logger } from "common/logger";
 
-const Login = ({ history }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await authApi.login({ login: { email, password } });
@@ -24,7 +24,6 @@ const Login = ({ history }) => {
       setAuthHeaders();
       setLoading(false);
       window.location.href = "/";
-      // history.push("/");
     } catch (error) {
       logger.error(error);
       setLoading(false);

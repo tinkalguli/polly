@@ -5,11 +5,7 @@ const NoMatch = () => {
   return (
     <section className="min-h-screen flex items-center justify-center">
       <center>
-        <img
-          className="w-2/4"
-          src="/images/404-error.svg"
-          alt="no match"
-        />
+        <img className="w-2/4" src="/images/404-error.svg" alt="no match" />
         <h1 className="text-4xl mb-1">Page Not Found ☹️</h1>
         <Link
           className="text-bb-purple hover:text-purple-500 focus:underline
@@ -21,6 +17,6 @@ const NoMatch = () => {
       </center>
     </section>
   );
-}
+};
 
 export default NoMatch;

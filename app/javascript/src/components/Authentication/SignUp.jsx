@@ -12,7 +12,7 @@ const SignUp = ({ history }) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       setLoading(true);

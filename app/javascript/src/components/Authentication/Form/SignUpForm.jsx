@@ -15,12 +15,12 @@ const SignUpForm = ({
   return (
     <div
       className="flex items-center justify-center min-h-screen px-4
-    py-12 sm:px-6 lg:px-8 bg-gray-50 "
+      py-12 sm:px-6 lg:px-8 bg-gray-50 "
     >
       <div className="w-full max-w-md">
         <h2
           className="mt-6 text-3xl font-extrabold leading-9
-        text-center text-bb-gray-700"
+          text-center text-bb-gray-700"
         >
           Sign Up
         </h2>
@@ -38,30 +38,30 @@ const SignUpForm = ({
           <Input
             label="First Name"
             placeholder="Oliver"
-            onChange={e => setFirstName(e.target.value)}
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <Input
             label="Last Name"
             placeholder="Smith"
-            onChange={e => setLastName(e.target.value)}
+            onChange={(e) => setLastName(e.target.value)}
           />
           <Input
             type="email"
             label="Email"
             placeholder="oliver@example.com"
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             type="password"
             label="Password"
             placeholder="********"
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Input
             type="password"
             label="Password Confirmation"
             placeholder="********"
-            onChange={e => setPasswordConfirmation(e.target.value)}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
           <div className="mt-6">
             <Button type="submit" buttonText="Register" loading={loading} />

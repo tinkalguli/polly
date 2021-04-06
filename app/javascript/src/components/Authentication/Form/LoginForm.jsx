@@ -32,13 +32,13 @@ const LoginForm = ({ handleSubmit, setEmail, setPassword, loading }) => {
             label="Email"
             type="email"
             placeholder="oliver@example.com"
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             label="Password"
             type="password"
             placeholder="********"
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <div className="mt-6">
             <Button type="submit" buttonText="Sign In" loading={loading} />
