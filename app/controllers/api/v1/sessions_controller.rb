@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Api::V1::SessionsController < ApplicationController
   before_action :authenticate_user_using_x_auth_token, only: [:destroy]
 
   def create

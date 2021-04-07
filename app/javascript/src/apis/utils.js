@@ -1,4 +1,4 @@
-const API_PREFIX_URL = "/";
+const API_PREFIX_URL = "/api/v1/";
 
 export const POLLS_URL = API_PREFIX_URL + "polls/";
 

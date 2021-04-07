@@ -1,4 +1,4 @@
-class ResponsesController < ApplicationController
+class Api::V1::ResponsesController < ApplicationController
   before_action :authenticate_user_using_x_auth_token, only: %i[create]
   before_action :check_response_existance, only: %i[create]
 
