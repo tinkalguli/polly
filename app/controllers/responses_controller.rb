@@ -5,7 +5,7 @@ class ResponsesController < ApplicationController
   def create
     @response = Response.new(response_params)
     if @response.save
-      render status: :ok, json: { notice: "Vote is submitted" }
+      render status: :ok, json: { notice: t('response.success_message') }
     else
       errors = @response.errors.full_messages
       render status: :unprocessable_entity, json: { errors: errors }
@@ -27,7 +27,7 @@ class ResponsesController < ApplicationController
     )
     if response.length > 0
       render status: :unprocessable_entity, json: {
-        errors: "You have already voted"
+        errors: t('response.duplicate_error_message')
       }
     end
   end
