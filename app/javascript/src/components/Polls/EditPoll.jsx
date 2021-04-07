@@ -19,11 +19,13 @@ const EditPoll = ({ history }) => {
     { content: "" },
   ]);
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      console.log("sdv")
-      await pollsApi.update(id, { poll: { title , options_attributes: options }});
+      console.log("sdv");
+      await pollsApi.update(id, {
+        poll: { title, options_attributes: options },
+      });
       setLoading(false);
       history.push("/");
     } catch (error) {

@@ -3,30 +3,31 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Button = ({
-    type = "button",
-    size = "large",
-    path = "",
-    buttonText,
-    onClick,
-    loading,
-    iconClass
+  type = "button",
+  size = "large",
+  path = "",
+  buttonText,
+  onClick,
+  loading,
+  iconClass,
 }) => {
-
   if (type === "link") {
-    return(
+    return (
       <Link
         to={path}
         className={`inline-block relative px-5 py-2 text-sm font-medium
           transition duration-150 ease-in-out bg-bb-purple border hover:shadow-md
           border-transparent group hover:bg-purple-600 focus:outline-none leading-5
-          text-white ${size === "small" ? "w-max rounded" : "w-full rounded-md"}`}
+          text-white ${
+            size === "small" ? "w-max rounded" : "w-full rounded-md"
+          }`}
       >
-        {
-          iconClass
-          ? <i className={`${iconClass} text-2xl pr-1 align-middle`}></i>
-          : "" 
-        }
-        { buttonText }
+        {iconClass ? (
+          <i className={`${iconClass} text-2xl pr-1 align-middle`}></i>
+        ) : (
+          ""
+        )}
+        {buttonText}
       </Link>
     );
   }
@@ -41,8 +42,8 @@ const Button = ({
         group hover:bg-purple-600 focus:outline-none hover:shadow-md
         ${size === "small" ? "w-max rounded" : "w-full rounded-md"}`}
     >
-      { iconClass ? <i className={`${iconClass} pr-1`}></i> : "" }
-      { loading ? "Loading..." : buttonText }
+      {iconClass ? <i className={`${iconClass} pr-1`}></i> : ""}
+      {loading ? "Loading..." : buttonText}
     </button>
   );
 };

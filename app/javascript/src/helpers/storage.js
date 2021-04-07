@@ -5,7 +5,7 @@ const setToLocalStorage = ({ authToken, email, userId, userFirstName }) => {
   localStorage.setItem("authUserFirstName", userFirstName);
 };
 
-const getFromLocalStorage = key => {
+const getFromLocalStorage = (key) => {
   return localStorage.getItem(key);
 };
 

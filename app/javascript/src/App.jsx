@@ -39,11 +39,11 @@ const App = () => {
     <Router>
       <ToastContainer />
       <NavBar isLoggedIn={isLoggedIn} />
-      {
-        isLoggedIn ?
-        <AuthenticatedRoutes isLoggedIn={isLoggedIn} /> :
+      {isLoggedIn ? (
+        <AuthenticatedRoutes isLoggedIn={isLoggedIn} />
+      ) : (
         <UnAuthenticatedRoutes isLoggedIn={isLoggedIn} />
-      }
+      )}
     </Router>
   );
 };
@@ -52,7 +52,7 @@ const AuthenticatedRoutes = ({ isLoggedIn }) => {
   return (
     <Switch>
       <Route exact path="/">
-        <Dashboard isLoggedIn={isLoggedIn}/>
+        <Dashboard isLoggedIn={isLoggedIn} />
       </Route>
       <Route exact path="/polls/new" component={CreatePoll} />
       <Route exact path="/polls/:id/show" component={ShowPoll} />
@@ -60,19 +60,19 @@ const AuthenticatedRoutes = ({ isLoggedIn }) => {
       <Route exact path="*" component={NoMatch} />
     </Switch>
   );
-}
+};
 
 const UnAuthenticatedRoutes = ({ isLoggedIn }) => {
   return (
     <Switch>
       <Route exact path="/">
-        <Dashboard isLoggedIn={isLoggedIn}/>
+        <Dashboard isLoggedIn={isLoggedIn} />
       </Route>
       <Route exact path="/signup" component={SignUp} />
       <Route exact path="/login" component={Login} />
       <RedirectRoute path="*" redirectRoute="/login" />
     </Switch>
   );
-}
+};
 
 export default App;

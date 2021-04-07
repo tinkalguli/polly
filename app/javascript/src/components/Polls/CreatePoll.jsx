@@ -14,10 +14,10 @@ const CreatePoll = ({ history }) => {
     { content: "" },
   ]);
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await pollsApi.create({ poll: { title , options_attributes: options}});
+      await pollsApi.create({ poll: { title, options_attributes: options } });
       setLoading(false);
       history.push("/");
     } catch (error) {

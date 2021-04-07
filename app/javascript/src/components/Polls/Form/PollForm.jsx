@@ -17,7 +17,7 @@ const PollForm = ({
     data[index].content = event.target.value;
 
     setOptions(data);
-  }
+  };
 
   return (
     <form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
@@ -25,32 +25,32 @@ const PollForm = ({
         label="Title"
         placeholder="Enter title"
         value={title}
-        onChange={e => setTitle(e.target.value)}
+        onChange={(e) => setTitle(e.target.value)}
       />
       <div className="w-3/4">
         <Input
           label="First option"
           placeholder="First option"
           value={options[0].content}
-          onChange={e => handleSetOptions(e, 0)}
+          onChange={(e) => handleSetOptions(e, 0)}
         />
         <Input
           label="Second option"
           placeholder="Second option"
           value={options[1].content}
-          onChange={e => handleSetOptions(e, 1)}
+          onChange={(e) => handleSetOptions(e, 1)}
         />
         <Input
           label="Third option"
           placeholder="Third option"
           value={options[2].content}
-          onChange={e => handleSetOptions(e, 2)}
+          onChange={(e) => handleSetOptions(e, 2)}
         />
         <Input
           label="Fourth option"
           placeholder="Fourth option"
           value={options[3].content}
-          onChange={e => handleSetOptions(e, 3)}
+          onChange={(e) => handleSetOptions(e, 3)}
         />
       </div>
       <div className="mt-6">
