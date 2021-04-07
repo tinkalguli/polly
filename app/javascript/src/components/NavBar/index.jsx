@@ -16,7 +16,7 @@ const NavBar = ({ isLoggedIn }) => {
         authToken: null,
         email: null,
         userId: null,
-        userName: null,
+        userFirstName: null,
       });
       resetAuthTokens();
       window.location.href = "/";

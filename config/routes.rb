@@ -3,8 +3,7 @@ Rails.application.routes.draw do
   # namespace :v1 do
   resources :polls, except: %i[new edit]
   resources :users, only: %i[create]
-  resources :sessions, only: [:create, :destroy]
-  resources :options, only: :index
+  resources :sessions, only: %i[create destroy]
   resources :responses, only: :create
   # end
   # end
