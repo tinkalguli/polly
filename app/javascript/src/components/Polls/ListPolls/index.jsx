@@ -1,12 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "components/Button";
 import { Link } from "react-router-dom";
-import { getFromLocalStorage } from "helpers/storage";
+
+import Actions from "./Actions";
 
 const ListPolls = ({ data, destroyPoll }) => {
-  const userId = getFromLocalStorage("authUserId");
-
   return (
     <ul className="mb-8">
       {data.map((poll) => (
@@ -21,24 +19,11 @@ const ListPolls = ({ data, destroyPoll }) => {
             <i className="ri-arrow-right-circle-fill text-bb-purple align-middle pr-2 text-xl"></i>
             {poll.title}
           </Link>
-
-          {userId == poll.user_id ? (
-            <div className="flex justify-between items-center gap-x-2">
-              <Button
-                size="small"
-                type="link"
-                path={`/polls/${poll.id}/edit`}
-                buttonText="Edit"
-              />
-              <Button
-                size="small"
-                onClick={() => destroyPoll(poll.id)}
-                buttonText="Delete"
-              />
-            </div>
-          ) : (
-            ""
-          )}
+          <Actions
+            destroyPoll={destroyPoll}
+            pollUserId={poll.user_id}
+            pollId={poll.id}
+          />
         </li>
       ))}
     </ul>

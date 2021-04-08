@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import Button from "components/Button";
-import Container from "components/Container";
-import PageLoader from "components/PageLoader";
+import { getFromLocalStorage } from "helpers/storage";
+import { logger } from "common/logger";
 import pollsApi from "apis/polls";
 import responsesApi from "apis/responses";
-import { logger } from "common/logger";
-import { getFromLocalStorage } from "helpers/storage";
+
+import Actions from "./Actions";
+import Container from "components/Container";
+import Option from "./Option";
+import PageLoader from "components/PageLoader";
 
 const ShowPoll = () => {
   const { id } = useParams();
   const userId = getFromLocalStorage("authUserId");
   const [title, setTitle] = useState("");
   const [options, setOptions] = useState([]);
-  const [votedOption, setVotedOption] = useState(null);
+  const [votedOptionId, setVotedOptionId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [isVoted, setIsVoted] = useState(false);
@@ -26,12 +28,13 @@ const ShowPoll = () => {
       const userResponses = response.data.responses.find(
         (v) => v.user_id == userId
       );
-
       setTitle(response.data.poll.title);
       setOptions(response.data.options);
       setVotes(response.data.responses);
-      setVotedOption(userResponses ? userResponses.option_id : userResponses);
-      setIsVoted(Boolean(userResponses));
+      if (userResponses) {
+        setVotedOptionId(userResponses.option_id);
+        setIsVoted(Boolean(userResponses));
+      }
     } catch (error) {
       logger.error(error);
     } finally {
@@ -43,7 +46,7 @@ const ShowPoll = () => {
     event.preventDefault();
     try {
       await responsesApi.create({
-        response: { poll_id: id, option_id: votedOption },
+        response: { poll_id: id, option_id: votedOptionId },
       });
       setLoading(false);
       fetchPollDetails();
@@ -78,40 +81,22 @@ const ShowPoll = () => {
         </h1>
         <ul className="mb-6 mt-3 px-6">
           {options?.map((option) => (
-            <li key={option?.id} className="my-6 block w-full">
-              <span
-                className={`border rounded p-3 w-3/4 inline-block cursor-pointer
-                hover:bg-bb-purple hover:text-white ${
-                  option.id === votedOption
-                    ? "bg-purple-600 text-white shadow-md"
-                    : ""
-                } ${isVoted ? "pointer-events-none" : ""}`}
-                onClick={() => setVotedOption(option.id)}
-              >
-                {option?.content}
-              </span>
-              {isVoted ? (
-                <span className="w-1/4 pl-4">
-                  {getVotePercentage(option.id)}%
-                </span>
-              ) : (
-                ""
-              )}
-            </li>
+            <Option
+              key={option.id}
+              option={option}
+              votedOptionId={votedOptionId}
+              isVoted={isVoted}
+              setVotedOptionId={setVotedOptionId}
+              getVotePercentage={getVotePercentage}
+            />
           ))}
         </ul>
-        <div className="flex justify-center px-6">
-          {isVoted ? (
-            <p className="py-2 font-medium">Thanks for voting! 🎉</p>
-          ) : (
-            <Button
-              loading={loading}
-              onClick={handleSubmit}
-              size="small"
-              buttonText="Submit"
-            />
-          )}
-        </div>
+
+        <Actions
+          isVoted={isVoted}
+          loading={loading}
+          handleSubmit={handleSubmit}
+        />
       </div>
     </Container>
   );

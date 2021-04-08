@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
-import SignUpForm from "components/Authentication/Form/SignUpForm";
 import authApi from "apis/auth";
 import { logger } from "common/logger";
 import { setAuthHeaders } from "apis/axios";
 import { setToLocalStorage } from "helpers/storage";
+
+import SignUpForm from "components/Authentication/Form/SignUpForm";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");

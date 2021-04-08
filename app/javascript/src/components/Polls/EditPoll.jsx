@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import Container from "components/Container";
-import PollForm from "./Form/PollForm";
 import pollsApi from "apis/polls";
-import PageLoader from "components/PageLoader";
 import { logger } from "common/logger";
+
+import Container from "components/Container";
+import PageLoader from "components/PageLoader";
+import PollForm from "./Form/PollForm";
 
 const EditPoll = ({ history }) => {
   const { id } = useParams();
