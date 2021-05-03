@@ -41,6 +41,11 @@ jobs:
       - run: bin/webpack
       - run: bundle exec rails webpacker:compile
 
+      # store test
+
+      - store_test_results:
+          path: test-results
+
       # Unit tests
 
       - run:
